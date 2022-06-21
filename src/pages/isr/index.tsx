@@ -11,7 +11,7 @@ export const getStaticProps: GetStaticProps = async () => {
     );
     const request = new HelloRequest();
     const time = new Date().toLocaleString('ko');
-
+    console.log(typeof window === 'undefined' ? 'Server!' : 'Client');
     console.log(`Run ISR! : ${time}`);
     request.setName(time);
 

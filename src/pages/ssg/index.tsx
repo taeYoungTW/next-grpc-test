@@ -13,6 +13,7 @@ export const getStaticProps: GetStaticProps = async () => {
     const time = new Date().toLocaleString('ko');
 
     console.log(`Run SSG! : ${time}`);
+    console.log(typeof window === 'undefined' ? 'Server!' : 'Client');
     request.setName(time);
     const res = await new Promise((resolve, reject) =>
         client.sayHello(request, {}, async (err, response) => {

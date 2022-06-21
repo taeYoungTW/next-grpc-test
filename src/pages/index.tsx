@@ -1,4 +1,4 @@
-import type { NextPage } from 'next';
+import type { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import styles from 'src/styles/Home.module.scss';
 import classNames from 'classnames/bind';
@@ -6,7 +6,13 @@ import Title from '@components/Title';
 import Link from 'next/link';
 const cx = classNames.bind(styles);
 
-const Home: NextPage = () => {
+export const getStaticProps: GetStaticProps = async () => {
+    return {
+        props: { ssg: new Date().toLocaleString() },
+    };
+};
+
+const Home: NextPage<{ ssg: string }> = ({ ssg }) => {
     return (
         <div className={cx('container')}>
             <Head>
@@ -22,6 +28,7 @@ const Home: NextPage = () => {
                 <h1 className={cx('title')}>
                     Welcome to <a href="https://nextjs.org">Next.js</a>
                 </h1>
+                <h1 className={cx('title')}>Build Time : {ssg}</h1>
                 <Title />
                 <div style={{ display: 'flex', gap: '10px', color: 'blue' }}>
                     <Link href="/ssr">

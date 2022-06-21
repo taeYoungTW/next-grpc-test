@@ -7,6 +7,7 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
+        "backend": "node ./node-server.js",
         "gen-node-ts": "grpc_tools_node_protoc --ts_out=import_style=commonjs,binary:./grpc/node --grpc_out=grpc_js:./grpc/node ./proto/*.proto",
         "gen-node-js": "grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./grpc/node --grpc_out=grpc_js:./grpc/node ./proto/*.proto",
         "gen-node": "npm run gen-node-js && npm run gen-node-ts",

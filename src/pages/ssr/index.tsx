@@ -13,6 +13,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
     const time = new Date().toLocaleString('ko');
 
     console.log(`Run SSR! : ${time}`);
+    console.log(typeof window === 'undefined' ? 'Server!' : 'Client');
+
     request.setName(time);
     const res = await new Promise((resolve, reject) =>
         client.sayHello(request, {}, async (err, response) => {
