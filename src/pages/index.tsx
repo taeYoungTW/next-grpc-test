@@ -1,42 +1,12 @@
-import type { GetStaticProps, NextPage } from 'next';
+import type { NextPage } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
 import styles from 'src/styles/Home.module.scss';
 import classNames from 'classnames/bind';
 import Title from '@components/Title';
+import Link from 'next/link';
 const cx = classNames.bind(styles);
-import { GreeterClient } from 'grpc/proto/helloworld_grpc_pb';
-import { HelloRequest } from 'grpc/proto/helloworld_pb';
-import { credentials } from '@grpc/grpc-js';
 
-export const getServerSideProps: GetStaticProps = async () => {
-    console.log('serverSideProps');
-    const client = new GreeterClient(
-        '0.0.0.0:9090',
-        credentials.createInsecure()
-    );
-    const request = new HelloRequest();
-    request.setName('test1SSR');
-    const res = await new Promise((resolve, reject) =>
-        client.sayHello(request, {}, async (err, response) => {
-            if (err) {
-                console.error(err);
-                reject(err);
-            }
-            const result = response.getMessage();
-            console.log('inner', result);
-            resolve(result);
-        })
-    );
-    console.log('outer', res);
-    return {
-        props: { ssr: res },
-    };
-};
-
-const Home: NextPage<{ ssr: string }> = ({ ssr }) => {
-    console.log('ServerSide Render', ssr);
-
+const Home: NextPage = () => {
     return (
         <div className={cx('container')}>
             <Head>
@@ -50,73 +20,21 @@ const Home: NextPage<{ ssr: string }> = ({ ssr }) => {
 
             <main className={cx('main')}>
                 <h1 className={cx('title')}>
-                    Welcome to{' '}
-                    <a href="https://nextjs.org">Next.js! {ssr ?? 'none'}</a>
+                    Welcome to <a href="https://nextjs.org">Next.js</a>
                 </h1>
                 <Title />
-                <p className={cx('description')}>
-                    Get started by editing{' '}
-                    <code className={cx('code')}>pages/index.tsx</code>
-                </p>
-
-                <div className={cx('grid')}>
-                    <a href="https://nextjs.org/docs" className={styles.card}>
-                        <h2>Documentation &rarr;</h2>
-                        <p>
-                            Find in-depth information about Next.js features and
-                            API.
-                        </p>
-                    </a>
-
-                    <a href="https://nextjs.org/learn" className={styles.card}>
-                        <h2>Learn &rarr;</h2>
-                        <p>
-                            Learn about Next.js in an interactive course with
-                            quizzes!
-                        </p>
-                    </a>
-
-                    <a
-                        href="https://github.com/vercel/next.js/tree/canary/examples"
-                        className={styles.card}
-                    >
-                        <h2>Examples &rarr;</h2>
-                        <p>
-                            Discover and deploy boilerplate example Next.js
-                            projects.
-                        </p>
-                    </a>
-
-                    <a
-                        href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                        className={styles.card}
-                    >
-                        <h2>Deploy &rarr;</h2>
-                        <p>
-                            Instantly deploy your Next.js site to a public URL
-                            with Vercel.
-                        </p>
-                    </a>
+                <div style={{ display: 'flex', gap: '10px', color: 'blue' }}>
+                    <Link href="/ssr">
+                        <h1>SSR</h1>
+                    </Link>
+                    <Link href="/isr">
+                        <h1>ISR</h1>
+                    </Link>
+                    <Link href="/ssg">
+                        <h1>SSG</h1>
+                    </Link>
                 </div>
             </main>
-
-            <footer className={styles.footer}>
-                <a
-                    href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Powered by{' '}
-                    <span className={styles.logo}>
-                        <Image
-                            src="/vercel.svg"
-                            alt="Vercel Logo"
-                            width={72}
-                            height={16}
-                        />
-                    </span>
-                </a>
-            </footer>
         </div>
     );
 };
