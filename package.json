@@ -7,8 +7,10 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "gen-ts": "grpc_tools_node_protoc --ts_out=import_style=commonjs,binary:./grpc --grpc_out=grpc_js:./grpc ./proto/helloworld.proto",
-        "gen": "grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./grpc --grpc_out=grpc_js:./grpc ./proto/helloworld.proto"
+        "gen-node-ts": "grpc_tools_node_protoc --ts_out=import_style=commonjs,binary:./grpc/node --grpc_out=grpc_js:./grpc/node ./proto/*.proto",
+        "gen-node-js": "grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./grpc/node --grpc_out=grpc_js:./grpc/node ./proto/*.proto",
+        "gen-node": "npm run gen-node-js && npm run gen-node-ts",
+        "gen-web": "protoc --proto_path=./proto proto/*.proto --js_out=import_style=commonjs,binary:./grpc/web --grpc-web_out=import_style=typescript,mode=grpcwebtext:./grpc/web"
     },
     "dependencies": {
         "classnames": "^2.3.1",

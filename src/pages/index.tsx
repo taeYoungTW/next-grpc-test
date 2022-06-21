@@ -33,6 +33,9 @@ const Home: NextPage = () => {
                     <Link href="/ssg">
                         <h1>SSG</h1>
                     </Link>
+                    <Link href="/csr">
+                        <h1>CSR</h1>
+                    </Link>
                 </div>
             </main>
         </div>

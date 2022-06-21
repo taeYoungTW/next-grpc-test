@@ -1,8 +1,8 @@
-import { GreeterClient } from 'grpc/proto/helloworld_grpc_pb';
 import type { GetStaticProps, NextPage } from 'next';
-import { HelloRequest } from 'grpc/proto/helloworld_pb';
 import { credentials } from '@grpc/grpc-js';
 import Link from 'next/link';
+import { GreeterClient } from 'grpc/node/proto/helloworld_grpc_pb';
+import { HelloRequest } from 'grpc/node/proto/helloworld_pb';
 
 export const getStaticProps: GetStaticProps = async () => {
     const client = new GreeterClient(
@@ -39,6 +39,7 @@ const ISR: NextPage = ({ isr }: Props) => {
     return (
         <div style={{ padding: '50px' }}>
             <h1>ISR: {isr}</h1>
+            <div>revalidate: 10s</div>
             <Link href={'/'}>
                 <h1 style={{ color: 'orange' }}>Home</h1>
             </Link>
