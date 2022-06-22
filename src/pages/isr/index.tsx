@@ -16,12 +16,13 @@ export const getStaticProps: GetStaticProps = async () => {
     request.setName(time);
 
     const res = await new Promise((resolve, reject) =>
-        client.sayHello(request, {}, async (err, response) => {
+        client.sayHello(request, {}, async (err, res) => {
             if (err) {
                 console.error(err);
                 reject(err);
             }
-            const result = response.getMessage();
+            if (!res) return;
+            const result = res.getMessage();
             resolve(result);
         })
     );

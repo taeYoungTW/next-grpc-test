@@ -8,16 +8,15 @@
         "start": "next start",
         "lint": "next lint",
         "backend": "node ./node-server.js",
-        "gen-node-ts": "grpc_tools_node_protoc --ts_out=import_style=commonjs,binary:./grpc/node --grpc_out=grpc_js:./grpc/node ./proto/*.proto",
-        "gen-node-js": "grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./grpc/node --grpc_out=grpc_js:./grpc/node ./proto/*.proto",
-        "gen-node": "npm run gen-node-js && npm run gen-node-ts",
+        "gen-node": "protoc --plugin=protoc-gen-ts=%CD%/node_modules/.bin/protoc-gen-ts.cmd --plugin=protoc-gen-grpc=%CD%/node_modules/.bin/grpc_tools_node_protoc_plugin.cmd --js_out=import_style=commonjs,binary:./grpc/node --ts_out=service=grpc-node,mode=grpc-js:./grpc/node --grpc_out=grpc_js:./grpc/node ./proto/*.proto",
         "gen-web": "protoc --proto_path=./proto proto/*.proto --js_out=import_style=commonjs,binary:./grpc/web --grpc-web_out=import_style=typescript,mode=grpcwebtext:./grpc/web"
     },
     "dependencies": {
         "classnames": "^2.3.1",
         "next": "12.1.6",
         "react": "18.2.0",
-        "react-dom": "18.2.0"
+        "react-dom": "18.2.0",
+        "ts-protoc-gen": "^0.15.0"
     },
     "devDependencies": {
         "@grpc/grpc-js": "^1.6.7",
@@ -28,7 +27,6 @@
         "eslint": "8.17.0",
         "eslint-config-next": "12.1.6",
         "google-protobuf": "^3.20.1",
-        "grpc_tools_node_protoc_ts": "^5.3.2",
         "grpc-tools": "^1.11.2",
         "grpc-web": "^1.3.1",
         "sass": "^1.52.3",

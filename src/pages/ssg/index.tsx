@@ -21,6 +21,7 @@ export const getStaticProps: GetStaticProps = async () => {
                 console.error(err);
                 reject(err);
             }
+            if (!response) return;
             const result = response.getMessage();
             resolve(result);
         })
