@@ -11,6 +11,7 @@
         "gen-node-ts": "grpc_tools_node_protoc --ts_out=import_style=commonjs,binary:./grpc/node --grpc_out=grpc_js:./grpc/node ./proto/*.proto",
         "gen-node-js": "grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./grpc/node --grpc_out=grpc_js:./grpc/node ./proto/*.proto",
         "gen-node": "npm run gen-node-js && npm run gen-node-ts",
+        "loader-type": "proto-loader-gen-types --longs=String --enums=String --defaults --oneofs --includeDirs=C:/Users/Twinny/Desktop/next-repos/next-ts --grpcLib=@grpc/grpc-js --outDir=grpc/ proto/helloworld.proto",
         "gen-web": "protoc --proto_path=./proto proto/*.proto --js_out=import_style=commonjs,binary:./grpc/web --grpc-web_out=import_style=typescript,mode=grpcwebtext:./grpc/web"
     },
     "dependencies": {

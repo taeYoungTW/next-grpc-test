@@ -1,28 +1,37 @@
 import type { GetServerSideProps, NextPage } from 'next';
-import { GreeterClient } from 'grpc/node/proto/helloworld_grpc_pb';
-import { HelloRequest } from 'grpc/node/proto/helloworld_pb';
+// import { GreeterClient } from 'grpc/node/proto/helloworld_grpc_pb';
+// import { HelloRequest } from 'grpc/node/proto/helloworld_pb';
 import { credentials } from '@grpc/grpc-js';
 import Link from 'next/link';
+import protoLoader from '@grpc/proto-loader';
+import grpcLibrary from '@grpc/grpc-js';
+import { ProtoGrpcType } from 'grpc/helloworld';
 
 export const getServerSideProps: GetServerSideProps = async () => {
-    const client = new GreeterClient(
+    const packageDefinition = protoLoader.loadSync(
+        '../../../proto/helloworld.proto',
+        {}
+    );
+    const proto = grpcLibrary.loadPackageDefinition(
+        packageDefinition
+    ) as unknown as ProtoGrpcType;
+
+    const client = new proto.helloworld.Greeter(
         '0.0.0.0:9090',
         credentials.createInsecure()
     );
-    const request = new HelloRequest();
     const time = new Date().toLocaleString('ko');
-
     console.log(`Run SSR! : ${time}`);
     console.log(typeof window === 'undefined' ? 'Server!' : 'Client');
 
-    request.setName(time);
     const res = await new Promise((resolve, reject) =>
-        client.sayHello(request, {}, async (err, response) => {
+        client.sayHello({ name: 'hi' }, {}, async (err, response) => {
             if (err) {
                 console.error(err);
                 reject(err);
             }
-            const result = response.getMessage();
+            if (!response) return;
+            const result = response;
             resolve(result);
         })
     );
