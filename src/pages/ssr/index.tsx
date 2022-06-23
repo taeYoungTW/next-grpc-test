@@ -1,33 +1,16 @@
-import type { GetServerSideProps, NextPage } from 'next';
-import { GreeterClient } from 'grpc/node/proto/helloworld_grpc_pb';
 import { HelloRequest } from 'grpc/node/proto/helloworld_pb';
-import { credentials } from '@grpc/grpc-js';
+import type { GetServerSideProps, NextPage } from 'next';
 import Link from 'next/link';
+import { nodeHello } from 'src/grpcAPI/nodeHello';
 
 export const getServerSideProps: GetServerSideProps = async () => {
-    const client = new GreeterClient(
-        '0.0.0.0:9090',
-        credentials.createInsecure()
-    );
-    const request = new HelloRequest();
     const time = new Date().toLocaleString('ko');
-
-    console.log(`Run SSR! : ${time}`);
-    console.log(typeof window === 'undefined' ? 'Server!' : 'Client');
-
-    request.setName(time);
-    const res = await new Promise((resolve, reject) =>
-        client.sayHello(request, {}, async (err, response) => {
-            if (err) {
-                console.error(err);
-                reject(err);
-            }
-            const result = response.getMessage();
-            resolve(result);
-        })
-    );
+    const helloRequest = new HelloRequest();
+    helloRequest.setName(time);
+    const res = await nodeHello(helloRequest);
+    console.log(`Run SSR!: ${time}`);
     return {
-        props: { ssr: res },
+        props: { ssr: res.getMessage() },
     };
 };
 

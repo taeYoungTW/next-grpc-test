@@ -1,17 +1,17 @@
+import { HelloRequest } from 'grpc/web/helloworld_pb';
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { HelloRequest } from 'grpc/web/helloworld_pb';
-import { GreeterClient } from 'grpc/web/HelloworldServiceClientPb';
+import { webHello } from 'src/grpcAPI/webHello';
 
 const CSR: NextPage = () => {
     const [csr, setCsr] = useState('');
     useEffect(() => {
         const fetch = async () => {
-            const client = new GreeterClient('http://sungchul.xyz:8080', null);
-            const request = new HelloRequest();
-            request.setName(new Date().toLocaleString('ko'));
-            const res = await client.sayHello(request, {});
+            const helloRequest = new HelloRequest();
+            const time = new Date().toLocaleString();
+            helloRequest.setName(`csr: ${time}`);
+            const res = await webHello(helloRequest);
             setCsr(res.getMessage());
         };
         fetch();
