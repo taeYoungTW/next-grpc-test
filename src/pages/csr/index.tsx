@@ -10,7 +10,7 @@ const CSR: NextPage = () => {
         (async () => {
             const client = new GreeterClient('http://sungchul.xyz:8080', null);
             const request = new HelloRequest();
-            request.setName(new Date().toLocaleString('ko'));
+            request.setName('msw');
             const res = await client.sayHello(request, {});
             setCsr(res.getMessage());
         })();

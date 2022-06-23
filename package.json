@@ -16,9 +16,13 @@
     "dependencies": {
         "axios": "^0.27.2",
         "classnames": "^2.3.1",
+        "msw": "^0.42.3",
         "next": "12.1.6",
         "react": "18.2.0",
         "react-dom": "18.2.0"
+    },
+    "msw": {
+        "workerDirectory": "public"
     },
     "devDependencies": {
         "@grpc/grpc-js": "^1.6.7",
