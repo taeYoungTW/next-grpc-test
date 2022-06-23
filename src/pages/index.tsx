@@ -43,6 +43,9 @@ const Home: NextPage<{ ssg: string }> = ({ ssg }) => {
                     <Link href="/csr">
                         <h1>CSR</h1>
                     </Link>
+                    <Link href="/csr-with-rest">
+                        <h1>CSR with REST</h1>
+                    </Link>
                 </div>
             </main>
         </div>
